@@ -31,7 +31,6 @@
 }
 
 body {
-  background: var(--background-gray);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto';
   -webkit-font-smoothing: antialiased;
