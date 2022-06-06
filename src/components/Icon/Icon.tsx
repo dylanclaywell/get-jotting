@@ -1,7 +1,15 @@
 import ChevronRight from './ChevronRight'
+import Plus from './Plus'
 import PlusCircle from './PlusCircle'
 
-type IconName = 'chevron-right' | 'plus-circle'
+type IconName = 'chevron-right' | 'plus-circle' | 'plus'
+
+export interface Props {
+  name: IconName
+  className?: string
+  width?: string
+  height?: string
+}
 
 const defaultWidth = '24'
 const defaultHeight = '24'
@@ -21,19 +29,15 @@ function getIcon(
       return <ChevronRight {...props} />
     case 'plus-circle':
       return <PlusCircle {...props} />
+    case 'plus':
+      return <Plus {...props} />
   }
 }
 
-export default function Icon({
-  name,
-  className,
-  width,
-  height,
-}: {
-  name: IconName
-  className?: string
-  width?: string
-  height?: string
-}) {
-  return <div class={className}>{getIcon(name, width, height)}</div>
+export default function Icon(props: Props) {
+  return (
+    <div class={props.className}>
+      {getIcon(props.name, props.width, props.height)}
+    </div>
+  )
 }

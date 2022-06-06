@@ -3,7 +3,7 @@ import { FileEntry } from '@tauri-apps/api/fs'
 
 import Icon from '../Icon'
 
-import styles from './FolderPanel.module.css'
+import styles from './FoldersPanel.module.css'
 import NewFolderForm from './NewFolderForm'
 
 export interface Props {

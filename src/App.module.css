@@ -7,50 +7,7 @@
   border-bottom: 1px solid var(--border-gray);
 }
 
-.notes {
-  background: white;
-  border: none;
-  width: 100%;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: default;
-  user-select: none;
-}
-
-.notes--selected {
-  background: var(--gray-300);
-}
-
-.notes__label {
-  color: black;
-}
-
-.notes__icon {
-  color: var(--gray-600);
-}
-
-.notes {
-  border-bottom: 1px solid var(--border-gray);
-}
-
-/*
-.notes:first-child {
-  border-bottom: 1px solid var(--border-gray);
-}
-
-.notes:not(:first-child) {
-  border-bottom: 1px solid var(--border-gray);
-} */
-
-.files-panel {
-  grid-column-end: span 5;
-  border-right: 1px solid var(--border-gray);
-  height: 100%;
-}
-
-.file-panel {
+.note-panel {
   grid-column-end: span 7;
   height: 100%;
 }

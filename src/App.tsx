@@ -1,10 +1,22 @@
-import { Component, createSignal, For } from 'solid-js'
+import { Component, createSignal } from 'solid-js'
 import { readDir, createDir, FileEntry } from '@tauri-apps/api/fs'
 import { dataDir, resolve } from '@tauri-apps/api/path'
+import { v4 as generatedUuid } from 'uuid'
+
+import FoldersPanel from './components/FoldersPanel'
+import NotesPanel from './components/NotesPanel'
 
 import styles from './App.module.css'
-import Icon from './components/Icon'
-import FolderPanel from './components/FolderPanel'
+
+interface Note {
+  /** The id is also the filename */
+  id: string
+  name: string
+  dateCreated: string
+  text?: string
+  path: string
+  children?: FileEntry[]
+}
 
 async function readDirectory(path: string) {
   try {
@@ -34,13 +46,16 @@ async function initializeDirectory(path: string) {
 
 // TODO create Rust API endpoints instead of using the path API directly here
 const App: Component = () => {
+  const [getSelectedNoteIndex, setSelectedNoteIndex] = createSignal<
+    number | null
+  >(null)
   const [getSelectedFolderIndex, setSelectedFolderIndex] = createSignal<
     number | null
   >(null)
   const [getFolders, setFolders] = createSignal<FileEntry[]>([])
-  const [getNotes, setNotes] = createSignal<FileEntry[]>([])
+  const [getNotes, setNotes] = createSignal<Note[]>([])
 
-  function getFoldersFromFile() {
+  function getFoldersFromFilesystem() {
     dataDir().then(async (path) => {
       const appPath = await resolve(path, 'dev.get-writing')
       const notesPath = await resolve(path, 'dev.get-writing', 'notes')
@@ -52,13 +67,35 @@ const App: Component = () => {
     })
   }
 
-  getFoldersFromFile()
+  async function getNotesFromFilesystem(path: string) {
+    const files = await readDirectory(path)
+
+    const validFiles = files.filter((file) => file.children)
+
+    setNotes(
+      validFiles.map((file) => {
+        return {
+          id: file.name ?? '',
+          name: 'Blah',
+          dateCreated: '2020-01-01',
+          text: '',
+          path: file.path,
+          children: file.children,
+        }
+      })
+    )
+  }
+
+  getFoldersFromFilesystem()
 
   function selectFolder(index: number, path: string) {
+    setSelectedNoteIndex(null)
     setSelectedFolderIndex(index)
-    readDirectory(path).then((files) => {
-      setNotes(files.filter((file) => !file.children))
-    })
+    getNotesFromFilesystem(path)
+  }
+
+  function selectNote(index: number, path: string) {
+    setSelectedNoteIndex(index)
   }
 
   async function createFolder(name: string) {
@@ -76,27 +113,54 @@ const App: Component = () => {
       }
     }
 
-    getFoldersFromFile()
+    getFoldersFromFilesystem()
+  }
+
+  async function createNote(name: string) {
+    const path = await dataDir()
+    const folderPath = await resolve(
+      path,
+      'dev.get-writing',
+      'notes',
+      generatedUuid()
+    )
+
+    try {
+      await createDir(folderPath)
+    } catch (error) {
+      if (
+        typeof error === 'string' &&
+        /Cannot create a file when that file already exists/.test(error)
+      ) {
+        // TODO display a message about a duplicate folder
+      }
+    }
+
+    const currentFolder = getFolders().find(
+      (f, index) => index === getSelectedFolderIndex()
+    )
+
+    if (currentFolder) {
+      getNotesFromFilesystem(currentFolder?.path)
+    }
   }
 
   return (
     <div class={styles['app']}>
-      <FolderPanel
+      <FoldersPanel
         getFolders={getFolders}
         getSelectedFolderIndex={getSelectedFolderIndex}
         selectFolder={selectFolder}
         createFolder={createFolder}
       />
-      <div class={styles['files-panel']}>
-        <For each={getNotes()}>
-          {(note) => (
-            <button class={styles['notes']}>
-              <span class={styles['notes__label']}>{note.name}</span>
-            </button>
-          )}
-        </For>
-      </div>
-      <div class={styles['file-panel']}></div>
+      <NotesPanel
+        shouldShowNotes={Boolean(getSelectedFolderIndex() !== null)}
+        getNotes={getNotes}
+        getSelectedNoteIndex={getSelectedNoteIndex}
+        selectNote={selectNote}
+        createNote={createNote}
+      />
+      <div class={styles['note-panel']}></div>
     </div>
   )
 }

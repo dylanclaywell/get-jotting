@@ -1,0 +1,45 @@
+.notes-panel {
+  grid-column-end: span 5;
+  border-right: 1px solid var(--border-gray);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.notes-panel__add-note-button {
+  color: var(--gray-600);
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.notes-panel__add-note-button:hover {
+  color: var(--gray-800);
+}
+
+.notes-panel__note {
+  width: 100%;
+  border: none;
+  border-top: 1px solid var(--border-gray);
+  border-bottom: 1px solid var(--border-gray);
+  background-color: transparent;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.notes-panel__note--selected {
+  background: var(--pink-100);
+}
+
+.notes-panel__note__label {
+  color: black;
+}
+
+.notes-panel__note--selected > .notes-panel__note__label {
+  color: white;
+}
+
+.notes-panel__note__icon {
+  color: var(--gray-600);
+}

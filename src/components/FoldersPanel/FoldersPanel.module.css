@@ -9,12 +9,15 @@
 }
 
 .folder-panel__header {
-  margin: 0.5rem;
+  margin: 0.5rem 0.5rem 2rem;
   font-size: 1.5rem;
   font-family: 'Roboto-Thin';
+  letter-spacing: 2px;
+  color: var(--gray-500);
 }
 
 .folder-panel__folder {
+  background-color: transparent;
   border: none;
   width: 100%;
   padding: 0.5rem;
@@ -41,7 +44,6 @@
   border: none;
   display: flex;
   align-items: center;
-  justify-content: center;
   margin: 0.5rem;
   color: var(--gray-600);
 }

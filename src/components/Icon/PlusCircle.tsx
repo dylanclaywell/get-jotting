@@ -1,15 +1,9 @@
-export default function PlusCircle({
-  width,
-  height,
-}: {
-  width: string
-  height: string
-}) {
+import { IconProps } from './types'
+
+export default function PlusCircle(props: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -17,6 +11,7 @@ export default function PlusCircle({
       stroke-linecap="round"
       stroke-linejoin="round"
       class="feather feather-plus-circle"
+      {...props}
     >
       <circle cx="12" cy="12" r="10"></circle>
       <line x1="12" y1="8" x2="12" y2="16"></line>

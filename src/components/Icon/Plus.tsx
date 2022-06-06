@@ -1,6 +1,6 @@
 import { IconProps } from './types'
 
-export default function ChevronRight(props: IconProps) {
+export default function Plus(props: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,10 +10,11 @@ export default function ChevronRight(props: IconProps) {
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="feather feather-chevron-right"
+      class="feather feather-plus"
       {...props}
     >
-      <polyline points="9 18 15 12 9 6"></polyline>
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
     </svg>
   )
 }
