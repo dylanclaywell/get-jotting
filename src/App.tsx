@@ -4,6 +4,7 @@ import { dataDir, resolve } from '@tauri-apps/api/path'
 
 import styles from './App.module.css'
 import Icon from './components/Icon'
+import FolderPanel from './components/FolderPanel'
 
 async function readDirectory(path: string) {
   try {
@@ -31,6 +32,7 @@ async function initializeDirectory(path: string) {
   }
 }
 
+// TODO create Rust API endpoints instead of using the path API directly here
 const App: Component = () => {
   const [getSelectedFolderIndex, setSelectedFolderIndex] = createSignal<
     number | null
@@ -38,15 +40,19 @@ const App: Component = () => {
   const [getFolders, setFolders] = createSignal<FileEntry[]>([])
   const [getNotes, setNotes] = createSignal<FileEntry[]>([])
 
-  dataDir().then(async (path) => {
-    const appPath = await resolve(path, 'dev.get-writing')
-    const notesPath = await resolve(path, 'dev.get-writing', 'notes')
+  function getFoldersFromFile() {
+    dataDir().then(async (path) => {
+      const appPath = await resolve(path, 'dev.get-writing')
+      const notesPath = await resolve(path, 'dev.get-writing', 'notes')
 
-    await initializeDirectory(appPath)
-    const files = await initializeDirectory(notesPath)
+      await initializeDirectory(appPath)
+      const files = await initializeDirectory(notesPath)
 
-    setFolders(files.filter((file) => Boolean(file.children)))
-  })
+      setFolders(files.filter((file) => Boolean(file.children)))
+    })
+  }
+
+  getFoldersFromFile()
 
   function selectFolder(index: number, path: string) {
     setSelectedFolderIndex(index)
@@ -55,27 +61,32 @@ const App: Component = () => {
     })
   }
 
+  async function createFolder(name: string) {
+    const path = await dataDir()
+    const folderPath = await resolve(path, 'dev.get-writing', 'notes', name)
+
+    try {
+      await createDir(folderPath)
+    } catch (error) {
+      if (
+        typeof error === 'string' &&
+        /Cannot create a file when that file already exists/.test(error)
+      ) {
+        // TODO display a message about a duplicate folder
+      }
+    }
+
+    getFoldersFromFile()
+  }
+
   return (
     <div class={styles['app']}>
-      <div class={styles['categories-panel']}>
-        <h1 class={styles['app__panel-header']}>Categories</h1>
-        <div>
-          <For each={getFolders()}>
-            {(folder, getIndex) => (
-              <button
-                class={styles['folder']}
-                classList={{
-                  [styles['folder--selected']]:
-                    getIndex() === getSelectedFolderIndex(),
-                }}
-                onClick={() => selectFolder(getIndex(), folder.path)}
-              >
-                <span class={styles['folder__label']}>{folder.name}</span>
-              </button>
-            )}
-          </For>
-        </div>
-      </div>
+      <FolderPanel
+        getFolders={getFolders}
+        getSelectedFolderIndex={getSelectedFolderIndex}
+        selectFolder={selectFolder}
+        createFolder={createFolder}
+      />
       <div class={styles['files-panel']}>
         <For each={getNotes()}>
           {(note) => (

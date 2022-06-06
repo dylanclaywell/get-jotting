@@ -1,0 +1,57 @@
+.folder-panel {
+  background-color: var(--gray-200);
+  grid-column-end: span 4;
+  border-right: 1px solid var(--border-gray);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.folder-panel__header {
+  margin: 0.5rem;
+  font-size: 1.5rem;
+  font-family: 'Roboto-Thin';
+}
+
+.folder-panel__folder {
+  border: none;
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: default;
+  user-select: none;
+}
+
+.folder-panel__folder--selected {
+  background: var(--gray-300);
+}
+
+.folder-panel__folder__label {
+  color: black;
+}
+
+.folder-panel__folder__icon {
+  color: var(--gray-600);
+}
+
+.folder-panel__add-folder-button {
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
+  color: var(--gray-600);
+}
+
+.folder-panel__add-folder-button:hover {
+  color: var(--gray-800);
+}
+
+.folder-panel__add-folder-button__icon {
+  display: flex;
+  align-items: center;
+  margin-right: 0.25rem;
+}

@@ -7,42 +7,6 @@
   border-bottom: 1px solid var(--border-gray);
 }
 
-.app__panel-header {
-  margin: 0.5rem;
-  font-size: 1.5rem;
-  font-family: 'Roboto-Thin';
-}
-
-.categories-panel {
-  background-color: var(--gray-200);
-  grid-column-end: span 4;
-  border-right: 1px solid var(--border-gray);
-  height: 100%;
-}
-
-.folder {
-  border: none;
-  width: 100%;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: default;
-  user-select: none;
-}
-
-.folder--selected {
-  background: var(--gray-300);
-}
-
-.folder__label {
-  color: black;
-}
-
-.folder__icon {
-  color: var(--gray-600);
-}
-
 .notes {
   background: white;
   border: none;
