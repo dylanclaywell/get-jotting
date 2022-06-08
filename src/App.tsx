@@ -1,6 +1,7 @@
 import { Component, createSignal } from 'solid-js'
 import { readDir, createDir, FileEntry } from '@tauri-apps/api/fs'
 import { dataDir, resolve } from '@tauri-apps/api/path'
+import { invoke } from '@tauri-apps/api'
 import { v4 as generatedUuid } from 'uuid'
 
 import FoldersPanel from './components/FoldersPanel'
@@ -104,7 +105,11 @@ const App: Component = () => {
 
     try {
       await createDir(folderPath)
+      await invoke('create_folder', {
+        name: name,
+      })
     } catch (error) {
+      console.log(error)
       if (
         typeof error === 'string' &&
         /Cannot create a file when that file already exists/.test(error)
@@ -127,6 +132,11 @@ const App: Component = () => {
 
     try {
       await createDir(folderPath)
+      await invoke('create_note', {
+        name,
+        folderId: '',
+        text: '',
+      })
     } catch (error) {
       if (
         typeof error === 'string' &&
