@@ -1,15 +1,15 @@
-import { Accessor, createSignal, For, JSX, JSXElement, Show } from 'solid-js'
-import { FileEntry } from '@tauri-apps/api/fs'
+import { Accessor, createSignal, For, Show } from 'solid-js'
 
 import Icon from '../Icon'
+import NewFolderForm from './NewFolderForm'
+import { Folder } from '../../types'
 
 import styles from './FoldersPanel.module.css'
-import NewFolderForm from './NewFolderForm'
 
 export interface Props {
-  getFolders: Accessor<FileEntry[]>
-  selectFolder: (index: number, path: string) => void
-  getSelectedFolderIndex: Accessor<number | null>
+  getFolders: Accessor<Folder[]>
+  selectFolder: (id: string) => void
+  getSelectedFolderId: Accessor<string | null>
   createFolder: (name: string) => void
 }
 
@@ -22,14 +22,14 @@ export default function FolderPanel(props: Props) {
         <h1 class={styles['folder-panel__header']}>Folders</h1>
         <div>
           <For each={props.getFolders()}>
-            {(folder, getIndex) => (
+            {(folder) => (
               <button
                 class={styles['folder-panel__folder']}
                 classList={{
                   [styles['folder-panel__folder--selected']]:
-                    getIndex() === props.getSelectedFolderIndex(),
+                    folder.id === props.getSelectedFolderId(),
                 }}
-                onClick={() => props.selectFolder(getIndex(), folder.path)}
+                onClick={() => props.selectFolder(folder.id)}
               >
                 <span class={styles['folder-panel__folder__label']}>
                   {folder.name}

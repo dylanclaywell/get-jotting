@@ -2,15 +2,17 @@ import { Accessor, For, Show } from 'solid-js'
 import { FileEntry } from '@tauri-apps/api/fs'
 
 import Icon from '../Icon'
+import { Note } from '../../types'
 
 import styles from './NotesPanel.module.css'
 
 export interface Props {
   shouldShowNotes: boolean
-  getNotes: Accessor<FileEntry[]>
-  getSelectedNoteIndex: Accessor<number | null>
-  selectNote: (index: number, path: string) => void
-  createNote: (name: string) => void
+  getNotes: Accessor<Note[]>
+  getSelectedFolderId: Accessor<string | null>
+  getSelectedNoteId: Accessor<string | null>
+  selectNote: (noteId: string) => void
+  createNote: (name: string, folderId: string) => void
 }
 
 export default function NotesPanel(props: Props) {
@@ -19,7 +21,12 @@ export default function NotesPanel(props: Props) {
       <Show when={props.shouldShowNotes}>
         <button
           class={styles['notes-panel__add-note-button']}
-          onClick={() => props.createNote('New Note')}
+          onClick={() => {
+            const folderId = props.getSelectedFolderId()
+            if (folderId) {
+              props.createNote('New Note', folderId)
+            }
+          }}
         >
           <Icon
             name="plus"
@@ -28,22 +35,24 @@ export default function NotesPanel(props: Props) {
             className={styles['notes-panel__add-note-button__icon']}
           />
         </button>
-        <For each={props.getNotes()}>
-          {(note, getIndex) => (
-            <button
-              class={styles['notes-panel__note']}
-              classList={{
-                [styles['notes-panel__note--selected']]:
-                  props.getSelectedNoteIndex() === getIndex(),
-              }}
-              onClick={() => props.selectNote(getIndex(), note.path)}
-            >
-              <span class={styles['notes-panel__note__label']}>
-                {note.name}
-              </span>
-            </button>
-          )}
-        </For>
+        <div class={styles['notes-panel__notes']}>
+          <For each={props.getNotes()}>
+            {(note) => (
+              <button
+                class={styles['notes-panel__note']}
+                classList={{
+                  [styles['notes-panel__note--selected']]:
+                    props.getSelectedNoteId() === note.id,
+                }}
+                onClick={() => props.selectNote(note.id)}
+              >
+                <span class={styles['notes-panel__note__label']}>
+                  {note.name || 'Title'}
+                </span>
+              </button>
+            )}
+          </For>
+        </div>
       </Show>
     </div>
   )

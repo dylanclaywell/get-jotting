@@ -18,10 +18,17 @@
   color: var(--gray-800);
 }
 
+.notes-panel__notes {
+  width: 100%;
+}
+
+.notes-panel__note:first-child {
+  border-top: 1px solid var(--border-gray);
+}
+
 .notes-panel__note {
   width: 100%;
   border: none;
-  border-top: 1px solid var(--border-gray);
   border-bottom: 1px solid var(--border-gray);
   background-color: transparent;
   padding: 0.5rem;

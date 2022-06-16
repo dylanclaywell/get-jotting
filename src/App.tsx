@@ -1,157 +1,122 @@
 import { Component, createSignal } from 'solid-js'
-import { readDir, createDir, FileEntry } from '@tauri-apps/api/fs'
-import { dataDir, resolve } from '@tauri-apps/api/path'
 import { invoke } from '@tauri-apps/api'
-import { v4 as generatedUuid } from 'uuid'
 
 import FoldersPanel from './components/FoldersPanel'
 import NotesPanel from './components/NotesPanel'
+import { Folder, Note } from './types'
 
 import styles from './App.module.css'
-
-interface Note {
-  /** The id is also the filename */
-  id: string
-  name: string
-  dateCreated: string
-  text?: string
-  path: string
-  children?: FileEntry[]
-}
-
-async function readDirectory(path: string) {
-  try {
-    const data = await readDir(path)
-    return data
-  } catch {
-    return []
-  }
-}
-
-async function initializeDirectory(path: string) {
-  try {
-    const data = await readDir(path)
-
-    return data
-  } catch (e) {
-    if (
-      typeof e === 'string' &&
-      /The system cannot find the path specified/.test(e)
-    ) {
-      await createDir(path)
-    }
-
-    return []
-  }
-}
+import NotePanel from './components/NotePanel'
 
 // TODO create Rust API endpoints instead of using the path API directly here
-const App: Component = () => {
-  const [getSelectedNoteIndex, setSelectedNoteIndex] = createSignal<
-    number | null
+export default function App() {
+  const [getSelectedNoteId, setSelectedNoteId] = createSignal<string | null>(
+    null
+  )
+  const [getSelectedFolderId, setSelectedFolderId] = createSignal<
+    string | null
   >(null)
-  const [getSelectedFolderIndex, setSelectedFolderIndex] = createSignal<
-    number | null
-  >(null)
-  const [getFolders, setFolders] = createSignal<FileEntry[]>([])
+  const [getFolders, setFolders] = createSignal<Folder[]>([])
   const [getNotes, setNotes] = createSignal<Note[]>([])
 
-  function getFoldersFromFilesystem() {
-    dataDir().then(async (path) => {
-      const appPath = await resolve(path, 'dev.get-writing')
-      const notesPath = await resolve(path, 'dev.get-writing', 'notes')
+  function getSelectedNote() {
+    return getNotes().find((n) => n.id === getSelectedNoteId())
+  }
 
-      await initializeDirectory(appPath)
-      const files = await initializeDirectory(notesPath)
-
-      setFolders(files.filter((file) => Boolean(file.children)))
+  function getFoldersFromDatabase() {
+    invoke('get_folders').then((folders) => {
+      setFolders(JSON.parse(folders as any))
     })
   }
 
-  async function getNotesFromFilesystem(path: string) {
-    const files = await readDirectory(path)
-
-    const validFiles = files.filter((file) => file.children)
-
-    setNotes(
-      validFiles.map((file) => {
-        return {
-          id: file.name ?? '',
-          name: 'Blah',
-          dateCreated: '2020-01-01',
-          text: '',
-          path: file.path,
-          children: file.children,
-        }
-      })
-    )
+  function getNotesFromDatabase(folderId: string) {
+    invoke('get_notes', {
+      folderId: folderId,
+    }).then((notes) => {
+      setNotes(JSON.parse(notes as any))
+    })
   }
 
-  getFoldersFromFilesystem()
+  getFoldersFromDatabase()
 
-  function selectFolder(index: number, path: string) {
-    setSelectedNoteIndex(null)
-    setSelectedFolderIndex(index)
-    getNotesFromFilesystem(path)
+  function selectFolder(id: string) {
+    setSelectedNoteId(null)
+    setSelectedFolderId(id)
+    getNotesFromDatabase(id)
   }
 
-  function selectNote(index: number, path: string) {
-    setSelectedNoteIndex(index)
+  function selectNote(id: string) {
+    setSelectedNoteId(id)
   }
 
   async function createFolder(name: string) {
-    const path = await dataDir()
-    const folderPath = await resolve(path, 'dev.get-writing', 'notes', name)
-
     try {
-      await createDir(folderPath)
       await invoke('create_folder', {
         name: name,
       })
     } catch (error) {
       console.log(error)
-      if (
-        typeof error === 'string' &&
-        /Cannot create a file when that file already exists/.test(error)
-      ) {
-        // TODO display a message about a duplicate folder
-      }
+      // TODO display an error message
     }
 
-    getFoldersFromFilesystem()
+    getFoldersFromDatabase()
   }
 
-  async function createNote(name: string) {
-    const path = await dataDir()
-    const folderPath = await resolve(
-      path,
-      'dev.get-writing',
-      'notes',
-      generatedUuid()
-    )
-
+  async function createNote(name: string, folderId: string) {
     try {
-      await createDir(folderPath)
       await invoke('create_note', {
         name,
-        folderId: '',
+        folderId,
         text: '',
       })
     } catch (error) {
-      if (
-        typeof error === 'string' &&
-        /Cannot create a file when that file already exists/.test(error)
-      ) {
-        // TODO display a message about a duplicate folder
-      }
+      // TODO display an error message
     }
 
     const currentFolder = getFolders().find(
-      (f, index) => index === getSelectedFolderIndex()
+      (f) => f.id === getSelectedFolderId()
     )
 
     if (currentFolder) {
-      getNotesFromFilesystem(currentFolder?.path)
+      getNotesFromDatabase(currentFolder?.id)
+    }
+  }
+
+  async function updateNoteName(id: string, name: string) {
+    try {
+      await invoke('update_note_name', {
+        id,
+        name,
+      })
+    } catch (error) {
+      // TODO display an error message
+    }
+
+    const currentFolder = getFolders().find(
+      (f) => f.id === getSelectedFolderId()
+    )
+
+    if (currentFolder) {
+      getNotesFromDatabase(currentFolder?.id)
+    }
+  }
+
+  async function updateNoteText(id: string, text: string) {
+    try {
+      await invoke('update_note_text', {
+        id,
+        text,
+      })
+    } catch (error) {
+      // TODO display an error message
+    }
+
+    const currentFolder = getFolders().find(
+      (f) => f.id === getSelectedFolderId()
+    )
+
+    if (currentFolder) {
+      getNotesFromDatabase(currentFolder?.id)
     }
   }
 
@@ -159,20 +124,23 @@ const App: Component = () => {
     <div class={styles['app']}>
       <FoldersPanel
         getFolders={getFolders}
-        getSelectedFolderIndex={getSelectedFolderIndex}
+        getSelectedFolderId={getSelectedFolderId}
         selectFolder={selectFolder}
         createFolder={createFolder}
       />
       <NotesPanel
-        shouldShowNotes={Boolean(getSelectedFolderIndex() !== null)}
+        shouldShowNotes={Boolean(getSelectedFolderId() !== null)}
         getNotes={getNotes}
-        getSelectedNoteIndex={getSelectedNoteIndex}
+        getSelectedFolderId={getSelectedFolderId}
+        getSelectedNoteId={getSelectedNoteId}
         selectNote={selectNote}
         createNote={createNote}
       />
-      <div class={styles['note-panel']}></div>
+      <NotePanel
+        getSelectedNote={getSelectedNote}
+        updateNoteName={updateNoteName}
+        updateNoteText={updateNoteText}
+      />
     </div>
   )
 }
-
-export default App
