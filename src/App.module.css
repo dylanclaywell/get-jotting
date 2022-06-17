@@ -7,6 +7,10 @@
   border-bottom: 1px solid var(--border-gray);
 }
 
+.app__delete-folder-dialog__folder-name {
+  color: var(--pink-100);
+}
+
 .note-panel {
   grid-column-end: span 7;
   height: 100%;

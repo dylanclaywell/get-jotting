@@ -11,6 +11,7 @@ fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
       controllers::folders::create_folder,
+      controllers::folders::delete_folder,
       controllers::folders::get_folders,
       controllers::notes::create_note,
       controllers::notes::get_notes,

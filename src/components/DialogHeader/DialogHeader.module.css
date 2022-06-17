@@ -1,0 +1,6 @@
+.dialog-header {
+  padding: 1rem;
+  background-color: blue;
+  border-top-left-radius: var(--rounded-md);
+  border-top-right-radius: var(--rounded-md);
+}

@@ -17,6 +17,11 @@
   --pink-100: #db256e;
 
   --border-gray: #dfdfdf;
+
+  --rounded-sm: 4px;
+  --rounded-md: 8px;
+  --rounded-lg: 16px;
+  --rounded-full: 9999px;
 }
 
 @font-face {

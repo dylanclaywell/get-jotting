@@ -1,0 +1,8 @@
+.dialog-actions {
+  padding: 1rem;
+  background-color: green;
+  border-bottom-left-radius: var(--rounded-md);
+  border-bottom-right-radius: var(--rounded-md);
+  display: flex;
+  justify-content: space-evenly;
+}

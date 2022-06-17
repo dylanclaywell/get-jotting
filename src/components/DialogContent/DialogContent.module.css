@@ -1,0 +1,9 @@
+.dialog-content {
+  padding: 1rem;
+  background-color: red;
+}
+
+.dialog-content:last-child {
+  border-bottom-left-radius: var(--rounded-md);
+  border-bottom-right-radius: var(--rounded-md);
+}

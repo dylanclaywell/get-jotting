@@ -56,6 +56,41 @@ pub fn create(folder: Folder) -> Folder {
   return folder;
 }
 
+pub fn delete(id: String) {
+  if !database::table_exists(String::from("folders")) {
+    create_folders_table();
+  }
+
+  let connection = sqlite::open("./database.db").unwrap();
+
+  let mut delete_folder_notes_statement = connection
+    .prepare(
+      "
+      delete from notes where folderId = ?
+    ",
+    )
+    .unwrap();
+
+  delete_folder_notes_statement.bind(1, &*id).unwrap();
+
+  delete_folder_notes_statement.next().unwrap();
+
+  let mut delete_folder_statement = connection
+    .prepare(
+      "
+        delete from folders where id = ?
+      ",
+    )
+    .unwrap();
+
+  delete_folder_statement.bind(1, &*id).unwrap();
+
+  delete_folder_statement.next().unwrap();
+
+  println!("Deleting folder");
+  println!("  - id: {}", id);
+}
+
 pub fn get_all() -> Vec<Folder> {
   let connection = sqlite::open("./database.db").unwrap();
 

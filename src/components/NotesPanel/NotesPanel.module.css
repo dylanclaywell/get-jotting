@@ -9,7 +9,7 @@
 
 .notes-panel__add-note-button {
   color: var(--gray-600);
-  padding: 0;
+  padding: 0.25rem;
   background-color: transparent;
   border: none;
 }

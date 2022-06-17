@@ -1,4 +1,4 @@
-import { Component, createSignal } from 'solid-js'
+import { Component, createSignal, onCleanup } from 'solid-js'
 import { invoke } from '@tauri-apps/api'
 
 import FoldersPanel from './components/FoldersPanel'
@@ -7,6 +7,10 @@ import { Folder, Note } from './types'
 
 import styles from './App.module.css'
 import NotePanel from './components/NotePanel'
+import Dialog from './components/Dialog'
+import DialogContent from './components/DialogContent'
+import DialogHeader from './components/DialogHeader'
+import DialogActions from './components/DialogActions'
 
 // TODO create Rust API endpoints instead of using the path API directly here
 export default function App() {
@@ -21,6 +25,10 @@ export default function App() {
 
   function getSelectedNote() {
     return getNotes().find((n) => n.id === getSelectedNoteId())
+  }
+
+  function getSelectedFolder() {
+    return getFolders().find((n) => n.id === getSelectedFolderId())
   }
 
   function getFoldersFromDatabase() {
@@ -120,8 +128,39 @@ export default function App() {
     }
   }
 
+  async function handleKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Delete' && getSelectedFolderId() !== null) {
+      await invoke('delete_folder', { id: getSelectedFolderId() })
+      getFoldersFromDatabase()
+      setNotes([])
+      setSelectedFolderId(null)
+    }
+  }
+
+  document.addEventListener('keydown', handleKeyDown)
+
+  onCleanup(() => document.removeEventListener('keydown', handleKeyDown))
+
   return (
     <div class={styles['app']}>
+      <Dialog>
+        <DialogHeader>Delete Folder</DialogHeader>
+        <DialogContent>
+          Are you sure you wish to delete folder{' '}
+          <span class={styles['app__delete-folder-dialog__folder-name']}>
+            {getSelectedFolder()?.name}
+          </span>
+          ?
+        </DialogContent>
+        <DialogActions
+          actions={[
+            { label: 'Cancel', onClick: () => undefined },
+            { label: 'Delete', onClick: () => undefined },
+          ]}
+        >
+          {(action) => <button onClick={action.onClick}>{action.label}</button>}
+        </DialogActions>
+      </Dialog>
       <FoldersPanel
         getFolders={getFolders}
         getSelectedFolderId={getSelectedFolderId}
