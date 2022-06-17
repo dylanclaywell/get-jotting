@@ -15,6 +15,10 @@
   --green-100: #66cc1d;
 
   --pink-100: #db256e;
+  --pink-200: #ab2e60;
+
+  --color-primary: var(--pink-100);
+  --color-primary-dark: var(--pink-200);
 
   --border-gray: #dfdfdf;
 

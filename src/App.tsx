@@ -1,4 +1,4 @@
-import { Component, createSignal, onCleanup } from 'solid-js'
+import { createSignal, onCleanup, Show } from 'solid-js'
 import { invoke } from '@tauri-apps/api'
 
 import FoldersPanel from './components/FoldersPanel'
@@ -7,13 +7,12 @@ import { Folder, Note } from './types'
 
 import styles from './App.module.css'
 import NotePanel from './components/NotePanel'
-import Dialog from './components/Dialog'
-import DialogContent from './components/DialogContent'
-import DialogHeader from './components/DialogHeader'
-import DialogActions from './components/DialogActions'
+import DeleteFolderDialog from './components/DeleteFolderDialog'
 
 // TODO create Rust API endpoints instead of using the path API directly here
 export default function App() {
+  const [getDeleteFolderDialogIsOpen, setDeleteFolderDialogIsOpen] =
+    createSignal(false)
   const [getSelectedNoteId, setSelectedNoteId] = createSignal<string | null>(
     null
   )
@@ -128,12 +127,16 @@ export default function App() {
     }
   }
 
+  async function deleteSelectedFolder() {
+    await invoke('delete_folder', { id: getSelectedFolderId() })
+    getFoldersFromDatabase()
+    setNotes([])
+    setSelectedFolderId(null)
+  }
+
   async function handleKeyDown(e: KeyboardEvent) {
     if (e.key === 'Delete' && getSelectedFolderId() !== null) {
-      await invoke('delete_folder', { id: getSelectedFolderId() })
-      getFoldersFromDatabase()
-      setNotes([])
-      setSelectedFolderId(null)
+      setDeleteFolderDialogIsOpen(true)
     }
   }
 
@@ -143,34 +146,14 @@ export default function App() {
 
   return (
     <div class={styles['app']}>
-      <Dialog>
-        <DialogHeader>Delete Folder</DialogHeader>
-        <DialogContent>
-          Are you sure you wish to delete folder{' '}
-          <span class={styles['app__delete-folder-dialog__folder-name']}>
-            {getSelectedFolder()?.name}
-          </span>
-          ?
-        </DialogContent>
-        <DialogActions
-          actions={[
-            { label: 'Cancel', onClick: () => undefined },
-            { label: 'Delete', onClick: () => undefined },
-          ]}
-        >
-          {(action) => (
-            <button
-              class={styles['app__delete-folder-dialog__action']}
-              classList={{
-                [styles['app__delete-folder-dialog__delete-action']]: false,
-              }}
-              onClick={action.onClick}
-            >
-              {action.label}
-            </button>
-          )}
-        </DialogActions>
-      </Dialog>
+      <DeleteFolderDialog
+        deleteFolder={deleteSelectedFolder}
+        isOpen={getDeleteFolderDialogIsOpen()}
+        selectedFolder={getSelectedFolder()}
+        onClose={() => {
+          setDeleteFolderDialogIsOpen(false)
+        }}
+      />
       <FoldersPanel
         getFolders={getFolders}
         getSelectedFolderId={getSelectedFolderId}

@@ -1,0 +1,23 @@
+.delete-folder-dialog__folder-name {
+  color: var(--pink-100);
+}
+
+.delete-folder-dialog__action {
+  border: none;
+  background-color: var(--gray-200);
+  border-radius: var(--rounded-sm);
+  padding: 0.25rem 0.5rem;
+}
+
+.delete-folder-dialog__action:hover {
+  background-color: var(--gray-300);
+}
+
+.delete-folder-dialog__delete-action {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.delete-folder-dialog__delete-action:hover {
+  background-color: var(--color-primary-dark);
+}

@@ -5,6 +5,7 @@ import styles from './DialogActions.module.css'
 export interface Action {
   label: string
   onClick: () => void
+  color?: 'primary' | 'secondary'
 }
 
 export interface Props {
