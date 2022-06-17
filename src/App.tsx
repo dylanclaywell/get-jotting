@@ -158,7 +158,17 @@ export default function App() {
             { label: 'Delete', onClick: () => undefined },
           ]}
         >
-          {(action) => <button onClick={action.onClick}>{action.label}</button>}
+          {(action) => (
+            <button
+              class={styles['app__delete-folder-dialog__action']}
+              classList={{
+                [styles['app__delete-folder-dialog__delete-action']]: false,
+              }}
+              onClick={action.onClick}
+            >
+              {action.label}
+            </button>
+          )}
         </DialogActions>
       </Dialog>
       <FoldersPanel
