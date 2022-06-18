@@ -9,6 +9,7 @@ import styles from './FoldersPanel.module.css'
 export interface Props {
   getFolders: Accessor<Folder[]>
   selectFolder: (id: string) => void
+  getFocusedObjectId: Accessor<string | null>
   getSelectedFolderId: Accessor<string | null>
   createFolder: (name: string) => void
 }
@@ -28,6 +29,8 @@ export default function FolderPanel(props: Props) {
                 classList={{
                   [styles['folder-panel__folder--selected']]:
                     folder.id === props.getSelectedFolderId(),
+                  [styles['folder-panel__folder--focused']]:
+                    folder.id === props.getFocusedObjectId(),
                 }}
                 onClick={() => props.selectFolder(folder.id)}
               >

@@ -28,3 +28,8 @@ pub fn update_note_name(id: String, name: String) {
 pub fn update_note_text(id: String, text: String) {
   note::update_text(id, text)
 }
+
+#[tauri::command]
+pub fn delete_note(id: String) {
+  note::delete(id)
+}

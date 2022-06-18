@@ -147,3 +147,25 @@ pub fn update_text(id: String, text: String) {
   println!("  - id: {}", id);
   println!("  - newText: {}", text);
 }
+
+pub fn delete(id: String) {
+  if !database::table_exists(String::from("notes")) {
+    create_notes_table();
+  }
+
+  let connection = sqlite::open("./database.db").unwrap();
+  let mut statement = connection
+    .prepare(
+      "
+        delete from notes where id = ?
+      ",
+    )
+    .unwrap();
+
+  statement.bind(1, &*id).unwrap();
+
+  statement.next().unwrap();
+
+  println!("Deleting note");
+  println!("  - id: {}", id);
+}

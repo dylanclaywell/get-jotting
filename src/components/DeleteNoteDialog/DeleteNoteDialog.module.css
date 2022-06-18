@@ -1,0 +1,23 @@
+.delete-note-dialog__note-name {
+  color: var(--pink-100);
+}
+
+.delete-note-dialog__action {
+  border: none;
+  background-color: var(--gray-200);
+  border-radius: var(--rounded-sm);
+  padding: 0.25rem 0.5rem;
+}
+
+.delete-note-dialog__action:hover {
+  background-color: var(--gray-300);
+}
+
+.delete-note-dialog__delete-action {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.delete-note-dialog__delete-action:hover {
+  background-color: var(--color-primary-dark);
+}

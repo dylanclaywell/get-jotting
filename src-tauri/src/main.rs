@@ -14,6 +14,7 @@ fn main() {
       controllers::folders::delete_folder,
       controllers::folders::get_folders,
       controllers::notes::create_note,
+      controllers::notes::delete_note,
       controllers::notes::get_notes,
       controllers::notes::update_note_name,
       controllers::notes::update_note_text,

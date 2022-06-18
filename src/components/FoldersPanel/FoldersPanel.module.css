@@ -32,6 +32,10 @@
   background: var(--gray-300);
 }
 
+.folder-panel__folder--focused {
+  background: var(--gray-400);
+}
+
 .folder-panel__folder__label {
   color: black;
 }

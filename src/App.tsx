@@ -1,4 +1,4 @@
-import { createSignal, onCleanup, Show } from 'solid-js'
+import { createSignal, onCleanup } from 'solid-js'
 import { invoke } from '@tauri-apps/api'
 
 import FoldersPanel from './components/FoldersPanel'
@@ -8,10 +8,12 @@ import { Folder, Note } from './types'
 import styles from './App.module.css'
 import NotePanel from './components/NotePanel'
 import DeleteFolderDialog from './components/DeleteFolderDialog'
+import DeleteNoteDialog from './components/DeleteNoteDialog'
 
-// TODO create Rust API endpoints instead of using the path API directly here
 export default function App() {
   const [getDeleteFolderDialogIsOpen, setDeleteFolderDialogIsOpen] =
+    createSignal(false)
+  const [getDeleteNoteDialogIsOpen, setDeleteNoteDialogIsOpen] =
     createSignal(false)
   const [getSelectedNoteId, setSelectedNoteId] = createSignal<string | null>(
     null
@@ -28,6 +30,10 @@ export default function App() {
 
   function getSelectedFolder() {
     return getFolders().find((n) => n.id === getSelectedFolderId())
+  }
+
+  function getFocusedObject() {
+    return getSelectedNote() ?? getSelectedFolder()
   }
 
   function getFoldersFromDatabase() {
@@ -118,12 +124,9 @@ export default function App() {
       // TODO display an error message
     }
 
-    const currentFolder = getFolders().find(
-      (f) => f.id === getSelectedFolderId()
-    )
-
-    if (currentFolder) {
-      getNotesFromDatabase(currentFolder?.id)
+    const selectedFolder = getSelectedFolder()
+    if (selectedFolder) {
+      getNotesFromDatabase(selectedFolder.id)
     }
   }
 
@@ -134,9 +137,33 @@ export default function App() {
     setSelectedFolderId(null)
   }
 
+  async function deleteSelectedNote() {
+    await invoke('delete_note', { id: getSelectedNoteId() })
+
+    const selectedFolder = getSelectedFolder()
+    if (selectedFolder) {
+      getNotesFromDatabase(selectedFolder.id)
+    }
+
+    setNotes([])
+    setSelectedNoteId(null)
+  }
+
   async function handleKeyDown(e: KeyboardEvent) {
-    if (e.key === 'Delete' && getSelectedFolderId() !== null) {
+    if (
+      e.key === 'Delete' &&
+      getFocusedObject() &&
+      getFocusedObject()?.id === getSelectedFolderId()
+    ) {
       setDeleteFolderDialogIsOpen(true)
+    }
+
+    if (
+      e.key === 'Delete' &&
+      getFocusedObject() &&
+      getFocusedObject()?.id === getSelectedNoteId()
+    ) {
+      setDeleteNoteDialogIsOpen(true)
     }
   }
 
@@ -154,9 +181,18 @@ export default function App() {
           setDeleteFolderDialogIsOpen(false)
         }}
       />
+      <DeleteNoteDialog
+        deleteNote={deleteSelectedNote}
+        isOpen={getDeleteNoteDialogIsOpen()}
+        selectedNote={getSelectedNote()}
+        onClose={() => {
+          setDeleteNoteDialogIsOpen(false)
+        }}
+      />
       <FoldersPanel
         getFolders={getFolders}
         getSelectedFolderId={getSelectedFolderId}
+        getFocusedObjectId={() => getFocusedObject()?.id ?? null}
         selectFolder={selectFolder}
         createFolder={createFolder}
       />
