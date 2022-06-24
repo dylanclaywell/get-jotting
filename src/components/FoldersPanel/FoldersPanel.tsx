@@ -12,13 +12,17 @@ export interface Props {
   getFocusedObjectId: Accessor<string | null>
   getSelectedFolderId: Accessor<string | null>
   createFolder: (name: string) => void
+  onFocus: (panel: 'notes' | 'note' | 'folders') => void
 }
 
 export default function FolderPanel(props: Props) {
   const [getIsAddingNewFolder, setIsAddingNewFolder] = createSignal(false)
 
   return (
-    <div class={styles['folder-panel']}>
+    <div
+      class={styles['folder-panel']}
+      onClick={() => props.onFocus('folders')}
+    >
       <div>
         <h1 class={styles['folder-panel__header']}>Folders</h1>
         <div>

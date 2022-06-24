@@ -1,6 +1,10 @@
 .note-panel {
   grid-column-end: span 7;
-  padding: 1rem;
+}
+
+.note-panel--rendered {
+  overflow-y: auto;
+  padding-bottom: 1rem;
 }
 
 .note-panel__name-input {
@@ -8,14 +12,113 @@
   border: none;
   width: 100%;
   outline: none;
-  font-size: 1.25rem;
+  font-size: 2rem;
   margin-bottom: 0.25rem;
+  z-index: 1;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--gray-300);
+}
+
+.note-panel--controls {
+  border-bottom: 1px solid var(--gray-300);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.note-panel--controls--hidden {
+  display: none;
+}
+
+.note-panel--controls__collapse-button {
+  width: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 2px;
+}
+
+.note-panel--controls__expand-button {
+  position: absolute;
+  right: 1.5rem;
+  width: 1rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 2px;
+}
+
+.note-panel--controls__expand-button:hover,
+.note-panel--controls__collapse-button:hover,
+.note-panel--controls__button:hover {
+  background-color: var(--gray-300);
+}
+
+.note-panel--controls__button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+.note-panel--controls__button--active {
+  background-color: var(--gray-400);
+  outline: 1px var(--gray-100) inset;
 }
 
 .note-panel__text-input {
   width: 100%;
   border: none;
-  height: calc(100% - 2rem);
+  height: calc(100% - 6rem);
   outline: none;
   resize: none;
+  font-size: 1rem;
+  padding: 1rem;
+}
+
+.note-panel__text-input--taller {
+  height: calc(100% - 3.65rem);
+}
+
+.note-panel__rendered-text {
+  padding: 1rem;
+}
+
+.note-panel__rendered-text blockquote {
+  margin: 1rem 0rem;
+  border-left: 0.25rem solid var(--gray-300);
+  background-color: var(--gray-200);
+  border-radius: 4px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.note-panel__rendered-text pre {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem;
+  background-color: var(--gray-200);
+  border-radius: 4px;
+}
+
+.note-panel__rendered-text code {
+  font-size: 0.8rem;
+}
+
+.note-panel__rendered-text blockquote p {
+  display: inline-block;
+  padding: 1rem;
+  margin: 0;
 }

@@ -1,8 +1,19 @@
 import ChevronRight from './ChevronRight'
+import ChevronsDown from './ChevronsDown'
+import ChevronsUp from './ChevronsUp'
 import Plus from './Plus'
 import PlusCircle from './PlusCircle'
+import Type from './Type'
 
-type IconName = 'chevron-right' | 'plus-circle' | 'plus'
+import styles from './Icon.module.css'
+
+type IconName =
+  | 'chevron-right'
+  | 'chevrons-down'
+  | 'chevrons-up'
+  | 'plus-circle'
+  | 'plus'
+  | 'type'
 
 export interface Props {
   name: IconName
@@ -31,12 +42,18 @@ function getIcon(
       return <PlusCircle {...props} />
     case 'plus':
       return <Plus {...props} />
+    case 'type':
+      return <Type {...props} />
+    case 'chevrons-up':
+      return <ChevronsUp {...props} />
+    case 'chevrons-down':
+      return <ChevronsDown {...props} />
   }
 }
 
 export default function Icon(props: Props) {
   return (
-    <div class={props.className}>
+    <div class={[styles.icon, props.className].join(' ')}>
       {getIcon(props.name, props.width, props.height)}
     </div>
   )

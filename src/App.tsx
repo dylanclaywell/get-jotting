@@ -11,6 +11,9 @@ import DeleteFolderDialog from './components/DeleteFolderDialog'
 import DeleteNoteDialog from './components/DeleteNoteDialog'
 
 export default function App() {
+  const [getFocusedPanel, setFocusedPanel] = createSignal<
+    'notes' | 'note' | 'folders' | null
+  >(null)
   const [getDeleteFolderDialogIsOpen, setDeleteFolderDialogIsOpen] =
     createSignal(false)
   const [getDeleteNoteDialogIsOpen, setDeleteNoteDialogIsOpen] =
@@ -33,7 +36,11 @@ export default function App() {
   }
 
   function getFocusedObject() {
-    return getSelectedNote() ?? getSelectedFolder()
+    return getFocusedPanel() === 'notes'
+      ? getSelectedNote()
+      : getFocusedPanel() === 'folders'
+      ? getSelectedFolder()
+      : null
   }
 
   function getFoldersFromDatabase() {
@@ -195,6 +202,7 @@ export default function App() {
         getFocusedObjectId={() => getFocusedObject()?.id ?? null}
         selectFolder={selectFolder}
         createFolder={createFolder}
+        onFocus={(panel) => setFocusedPanel(panel)}
       />
       <NotesPanel
         shouldShowNotes={Boolean(getSelectedFolderId() !== null)}
@@ -203,11 +211,13 @@ export default function App() {
         getSelectedNoteId={getSelectedNoteId}
         selectNote={selectNote}
         createNote={createNote}
+        onFocus={(panel) => setFocusedPanel(panel)}
       />
       <NotePanel
         getSelectedNote={getSelectedNote}
         updateNoteName={updateNoteName}
         updateNoteText={updateNoteText}
+        onFocus={(panel) => setFocusedPanel(panel)}
       />
     </div>
   )

@@ -13,11 +13,12 @@ export interface Props {
   getSelectedNoteId: Accessor<string | null>
   selectNote: (noteId: string) => void
   createNote: (name: string, folderId: string) => void
+  onFocus: (panel: 'notes' | 'note' | 'folders') => void
 }
 
 export default function NotesPanel(props: Props) {
   return (
-    <div class={styles['notes-panel']}>
+    <div class={styles['notes-panel']} onClick={() => props.onFocus('notes')}>
       <Show when={props.shouldShowNotes}>
         <button
           class={styles['notes-panel__add-note-button']}
