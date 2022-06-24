@@ -8,14 +8,14 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "get-writing",
+    "productName": "get-noting",
     "version": "0.1.0"
   },
   "tauri": {
     "allowlist": {
       "fs": {
         "all": true,
-        "scope": ["$DATA/dev.get-writing", "$DATA/dev.get-writing/*"]
+        "scope": ["$DATA/dev.get-noting", "$DATA/dev.get-noting/*"]
       },
       "path": {
         "all": true
@@ -36,7 +36,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "dev.get-writing",
+      "identifier": "dev.get-noting",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
