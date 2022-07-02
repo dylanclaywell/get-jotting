@@ -3,5 +3,6 @@
   border-bottom-left-radius: var(--rounded-md);
   border-bottom-right-radius: var(--rounded-md);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
+  gap: 1rem;
 }

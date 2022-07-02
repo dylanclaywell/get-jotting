@@ -1,11 +1,4 @@
-import {
-  children,
-  createEffect,
-  createMemo,
-  createSignal,
-  JSXElement,
-  splitProps,
-} from 'solid-js'
+import { createSignal, JSXElement, onCleanup } from 'solid-js'
 import { Portal, Dynamic } from 'solid-js/web'
 
 import styles from './Dialog.module.css'
@@ -21,6 +14,16 @@ export default function Dialog(props: Props) {
   function close() {
     setIsExiting(true)
   }
+
+  function handleKeyDown() {
+    close()
+  }
+
+  document.addEventListener('keydown', handleKeyDown)
+
+  onCleanup(() => {
+    document.removeEventListener('keydown', handleKeyDown)
+  })
 
   return (
     <Portal>

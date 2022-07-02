@@ -6,7 +6,7 @@
   border: none;
   background-color: var(--gray-200);
   border-radius: var(--rounded-sm);
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 1rem;
 }
 
 .delete-folder-dialog__action:hover {

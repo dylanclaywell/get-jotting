@@ -23,7 +23,7 @@ export default function DeleteNoteDialog(props: Props) {
           <>
             <DialogHeader>Delete Note</DialogHeader>
             <DialogContent>
-              Are you sure you wish to delete note{' '}
+              Are you sure you want to delete note{' '}
               <span class={styles['delete-note-dialog__note-name']}>
                 {props.selectedNote?.name}
               </span>

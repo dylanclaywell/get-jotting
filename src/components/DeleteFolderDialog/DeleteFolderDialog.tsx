@@ -23,7 +23,7 @@ export default function DeleteFolderDialog(props: Props) {
           <>
             <DialogHeader>Delete Folder</DialogHeader>
             <DialogContent>
-              Are you sure you wish to delete folder{' '}
+              Are you sure you want to delete folder{' '}
               <span class={styles['delete-folder-dialog__folder-name']}>
                 {props.selectedFolder?.name}
               </span>
