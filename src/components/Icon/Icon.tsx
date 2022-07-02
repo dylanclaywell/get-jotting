@@ -6,6 +6,9 @@ import PlusCircle from './PlusCircle'
 import Type from './Type'
 
 import styles from './Icon.module.css'
+import FilePlus from './FilePlus'
+import FolderPlus from './FolderPlus'
+import FileText from './FileText'
 
 type IconName =
   | 'chevron-right'
@@ -14,6 +17,9 @@ type IconName =
   | 'plus-circle'
   | 'plus'
   | 'type'
+  | 'folder-plus'
+  | 'file-plus'
+  | 'file-text'
 
 export interface Props {
   name: IconName
@@ -48,6 +54,12 @@ function getIcon(
       return <ChevronsUp {...props} />
     case 'chevrons-down':
       return <ChevronsDown {...props} />
+    case 'folder-plus':
+      return <FolderPlus {...props} />
+    case 'file-plus':
+      return <FilePlus {...props} />
+    case 'file-text':
+      return <FileText {...props} />
   }
 }
 

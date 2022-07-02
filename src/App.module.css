@@ -1,14 +1,9 @@
 .app {
   display: grid;
-  grid-template-columns: repeat(16, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   /* Subtract 2px to account for the top and bottom border */
   height: calc(100vh - 2px);
   border-top: 1px solid var(--border-gray);
   border-bottom: 1px solid var(--border-gray);
   overflow: hidden;
-}
-
-.note-panel {
-  grid-column-end: span 7;
-  height: 100%;
 }

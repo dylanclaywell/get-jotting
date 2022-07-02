@@ -25,7 +25,7 @@ export default function FolderPanel(props: Props) {
     >
       <div>
         <h1 class={styles['folder-panel__header']}>Folders</h1>
-        <div>
+        <div class={styles['folder-panel__folders']}>
           <For each={props.getFolders()}>
             {(folder) => (
               <button
@@ -58,9 +58,8 @@ export default function FolderPanel(props: Props) {
       >
         <Icon
           className={styles['folder-panel__add-folder-button__icon']}
-          name="plus-circle"
+          name="folder-plus"
         />
-        Add Folder
       </button>
     </div>
   )

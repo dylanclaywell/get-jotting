@@ -20,22 +20,6 @@ export default function NotesPanel(props: Props) {
   return (
     <div class={styles['notes-panel']} onClick={() => props.onFocus('notes')}>
       <Show when={props.shouldShowNotes}>
-        <button
-          class={styles['notes-panel__add-note-button']}
-          onClick={() => {
-            const folderId = props.getSelectedFolderId()
-            if (folderId) {
-              props.createNote('New Note', folderId)
-            }
-          }}
-        >
-          <Icon
-            name="plus"
-            width="20"
-            height="20"
-            className={styles['notes-panel__add-note-button__icon']}
-          />
-        </button>
         <div class={styles['notes-panel__notes']}>
           <For each={props.getNotes()}>
             {(note) => (
@@ -54,6 +38,22 @@ export default function NotesPanel(props: Props) {
             )}
           </For>
         </div>
+        <button
+          class={styles['notes-panel__add-note-button']}
+          onClick={() => {
+            const folderId = props.getSelectedFolderId()
+            if (folderId) {
+              props.createNote('New Note', folderId)
+            }
+          }}
+        >
+          <Icon
+            name="file-plus"
+            width="20"
+            height="20"
+            className={styles['notes-panel__add-note-button__icon']}
+          />
+        </button>
       </Show>
     </div>
   )

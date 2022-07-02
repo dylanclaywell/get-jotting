@@ -1,6 +1,6 @@
 .folder-panel {
-  background-color: var(--gray-200);
-  grid-column-end: span 4;
+  background-color: var(--gray-100);
+  grid-column-end: span 3;
   border-right: 1px solid var(--border-gray);
   height: 100%;
   display: flex;
@@ -9,27 +9,37 @@
 }
 
 .folder-panel__header {
-  margin: 0.5rem 0.5rem 2rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
   font-size: 1.5rem;
-  font-family: 'Roboto-Thin';
-  letter-spacing: 2px;
-  color: var(--gray-500);
+  font-weight: 100;
+  font-family: 'Nunito';
+}
+
+.folder-panel__folders {
+  display: flex;
+  flex-direction: column;
 }
 
 .folder-panel__folder {
   background-color: transparent;
   border: none;
-  width: 100%;
+  flex-grow: 1;
+  margin: 0.5rem;
   padding: 0.5rem;
+  border-radius: var(--rounded-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: default;
   user-select: none;
+  font-weight: 300;
 }
 
 .folder-panel__folder--selected {
   background: var(--gray-300);
+  font-weight: 500;
 }
 
 .folder-panel__folder--focused {
@@ -46,14 +56,13 @@
 
 .folder-panel__add-folder-button {
   border: none;
-  display: flex;
-  align-items: center;
   margin: 0.5rem;
   color: var(--gray-600);
+  width: fit-content;
 }
 
 .folder-panel__add-folder-button:hover {
-  color: var(--gray-800);
+  color: var(--pink-100);
 }
 
 .folder-panel__add-folder-button__icon {

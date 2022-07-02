@@ -1,10 +1,11 @@
 .notes-panel {
-  grid-column-end: span 5;
+  grid-column-end: span 3;
   border-right: 1px solid var(--border-gray);
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .notes-panel__add-note-button {
@@ -12,31 +13,41 @@
   padding: 0.25rem;
   background-color: transparent;
   border: none;
+  margin: 0.5rem;
 }
 
 .notes-panel__add-note-button:hover {
-  color: var(--gray-800);
+  color: var(--pink-100);
 }
 
 .notes-panel__notes {
   width: 100%;
-}
-
-.notes-panel__note:first-child {
-  border-top: 1px solid var(--border-gray);
+  display: flex;
+  flex-direction: column;
 }
 
 .notes-panel__note {
-  width: 100%;
+  flex-grow: 1;
   border: none;
-  border-bottom: 1px solid var(--border-gray);
   background-color: transparent;
   padding: 0.5rem;
+  margin: 0.5rem;
   text-align: left;
+  border-radius: var(--rounded-sm);
+  font-weight: 300;
+}
+
+.notes-panel__note:hover {
+  background-color: var(--pink-50);
 }
 
 .notes-panel__note--selected {
   background: var(--pink-100);
+  font-weight: 500;
+}
+
+.notes-panel__note--selected:hover {
+  background: var(--pink-200);
 }
 
 .notes-panel__note__label {

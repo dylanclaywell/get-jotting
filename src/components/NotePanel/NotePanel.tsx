@@ -47,49 +47,23 @@ export default function NotePanel(props: Props) {
             }
           }}
         />
-        <Show
-          when={getShouldShowControls()}
-          fallback={
-            <div>
-              <button
-                onClick={() => {
-                  setShouldShowControls(true)
-                }}
-                class={styles['note-panel--controls__expand-button']}
-              >
-                <Icon name="chevrons-down" width="16" height="16" />
-              </button>
-            </div>
-          }
-        >
-          <div class={styles['note-panel--controls']}>
-            <div>
-              <button
-                class={styles['note-panel--controls__button']}
-                classList={{
-                  [styles['note-panel--controls__button--active']]:
-                    getShouldShowMarkdown(),
-                }}
-                onClick={() => setShouldShowMarkdown(!getShouldShowMarkdown())}
-              >
-                <Icon
-                  name="type"
-                  width="16"
-                  height="16"
-                  className={styles['note-panel--controls__icon']}
-                />
-              </button>
-            </div>
+        <div class={styles['note-panel--controls']}>
+          <div>
             <button
-              onClick={() => {
-                setShouldShowControls(false)
+              class={styles['note-panel--controls__button']}
+              classList={{
+                [styles['note-panel--controls__button--active']]:
+                  getShouldShowMarkdown(),
               }}
-              class={styles['note-panel--controls__collapse-button']}
+              onClick={() => setShouldShowMarkdown(!getShouldShowMarkdown())}
             >
-              <Icon name="chevrons-up" width="16" height="16" />
+              <Icon
+                name="file-text"
+                className={styles['note-panel--controls__icon']}
+              />
             </button>
           </div>
-        </Show>
+        </div>
         <Show
           when={getShouldShowMarkdown()}
           fallback={
