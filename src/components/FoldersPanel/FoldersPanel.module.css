@@ -37,6 +37,10 @@
   font-weight: 300;
 }
 
+.folder-panel__folder:hover {
+  background-color: var(--gray-200);
+}
+
 .folder-panel__folder--selected {
   background: var(--gray-300);
   font-weight: 500;
@@ -59,6 +63,7 @@
   margin: 0.5rem;
   color: var(--gray-600);
   width: fit-content;
+  background-color: transparent;
 }
 
 .folder-panel__add-folder-button:hover {
