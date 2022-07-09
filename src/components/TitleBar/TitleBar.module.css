@@ -1,0 +1,36 @@
+.titlebar {
+  background: var(--gray-100);
+  user-select: none;
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid var(--border-gray);
+  padding: 0.5rem;
+  border-radius: var(--rounded-md);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.titlebar__button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--gray-500);
+}
+
+.titlebar__button:not(:first-child) {
+  margin-left: 0.25rem;
+}
+
+.titlebar__button:hover {
+  color: var(--gray-900);
+}
+
+.titlebar__button--close:hover {
+  color: red;
+}

@@ -4,11 +4,15 @@ import ChevronsUp from './ChevronsUp'
 import Plus from './Plus'
 import PlusCircle from './PlusCircle'
 import Type from './Type'
-
-import styles from './Icon.module.css'
 import FilePlus from './FilePlus'
 import FolderPlus from './FolderPlus'
 import FileText from './FileText'
+import Minus from './Minus'
+import Maximize2 from './Maximize2'
+import Minimize2 from './Minimize2'
+import X from './X'
+
+import styles from './Icon.module.css'
 
 type IconName =
   | 'chevron-right'
@@ -20,6 +24,10 @@ type IconName =
   | 'folder-plus'
   | 'file-plus'
   | 'file-text'
+  | 'minus'
+  | 'maximize-2'
+  | 'minimize-2'
+  | 'x'
 
 export interface Props {
   name: IconName
@@ -60,6 +68,14 @@ function getIcon(
       return <FilePlus {...props} />
     case 'file-text':
       return <FileText {...props} />
+    case 'minus':
+      return <Minus {...props} />
+    case 'maximize-2':
+      return <Maximize2 {...props} />
+    case 'minimize-2':
+      return <Minimize2 {...props} />
+    case 'x':
+      return <X {...props} />
   }
 }
 

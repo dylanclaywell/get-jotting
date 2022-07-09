@@ -57,6 +57,10 @@
     url(./assets/fonts/Nunito/Nunito-Black.ttf) format('truetype');
 }
 
+html {
+  background-color: transparent;
+}
+
 body {
   margin: 0;
   font-family: 'Nunito';

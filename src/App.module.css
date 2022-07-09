@@ -2,8 +2,10 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   /* Subtract 2px to account for the top and bottom border */
-  height: calc(100vh - 2px);
-  border-top: 1px solid var(--border-gray);
-  border-bottom: 1px solid var(--border-gray);
+  height: calc(100vh);
+  padding-top: 47px;
   overflow: hidden;
+  background-color: white;
+  border-radius: var(--rounded-md);
+  border: 1px solid var(--border-gray);
 }

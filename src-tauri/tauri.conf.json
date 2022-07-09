@@ -13,12 +13,31 @@
   },
   "tauri": {
     "allowlist": {
-      "fs": {
-        "all": true,
-        "scope": ["$DATA/dev.get-noting", "$DATA/dev.get-noting/*"]
-      },
-      "path": {
-        "all": true
+      "window": {
+        "all": false,
+        "center": false,
+        "close": true,
+        "create": false,
+        "hide": false,
+        "maximize": true,
+        "minimize": true,
+        "print": false,
+        "requestUserAttention": false,
+        "setAlwaysOnTop": false,
+        "setDecorations": false,
+        "setFocus": false,
+        "setFullscreen": false,
+        "setIcon": false,
+        "setMaxSize": false,
+        "setMinSize": false,
+        "setPosition": false,
+        "setResizable": false,
+        "setSize": false,
+        "setSkipTaskbar": false,
+        "setTitle": false,
+        "show": false,
+        "startDragging": true,
+        "unmaximize": true
       }
     },
     "bundle": {
@@ -66,7 +85,9 @@
         "height": 600,
         "resizable": true,
         "title": "get N O T I N G",
-        "width": 800
+        "width": 800,
+        "decorations": false,
+        "transparent": true
       }
     ]
   }
