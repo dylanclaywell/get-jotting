@@ -1,5 +1,4 @@
 import { appWindow } from '@tauri-apps/api/window'
-import { createEffect, createSignal, Show } from 'solid-js'
 
 import Icon from '../Icon'
 
