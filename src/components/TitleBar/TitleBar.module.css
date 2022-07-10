@@ -1,5 +1,5 @@
 .titlebar {
-  background: var(--gray-100);
+  background: var(--gray-2);
   user-select: none;
   display: flex;
   justify-content: flex-end;
@@ -20,7 +20,7 @@
   align-items: center;
   width: 30px;
   height: 30px;
-  color: var(--gray-500);
+  color: var(--gray-4);
 }
 
 .titlebar__button:not(:first-child) {
@@ -28,7 +28,7 @@
 }
 
 .titlebar__button:hover {
-  color: var(--gray-900);
+  color: var(--gray-5);
 }
 
 .titlebar__button--close:hover {

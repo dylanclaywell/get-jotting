@@ -6,8 +6,6 @@ import Icon from '../Icon'
 import styles from './TitleBar.module.css'
 
 export default function TitleBar() {
-  const [getIsMaximized, setIsMaximized] = createSignal(false)
-
   return (
     <div data-tauri-drag-region id="titlebar" class={styles['titlebar']}>
       <div

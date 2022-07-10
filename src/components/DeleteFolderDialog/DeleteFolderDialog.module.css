@@ -1,23 +1,23 @@
 .delete-folder-dialog__folder-name {
-  color: var(--pink-100);
+  color: var(--pink-2);
 }
 
 .delete-folder-dialog__action {
   border: none;
-  background-color: var(--gray-200);
+  background-color: var(--gray-3);
   border-radius: var(--rounded-sm);
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .delete-folder-dialog__action:hover {
-  background-color: var(--gray-300);
+  background-color: var(--gray-4);
 }
 
 .delete-folder-dialog__delete-action {
-  background-color: var(--color-primary);
+  background-color: var(--pink-2);
   color: white;
 }
 
 .delete-folder-dialog__delete-action:hover {
-  background-color: var(--color-primary-dark);
+  background-color: var(--pink-3);
 }

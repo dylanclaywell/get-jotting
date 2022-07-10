@@ -4,20 +4,20 @@
 
 .delete-note-dialog__action {
   border: none;
-  background-color: var(--gray-200);
+  background-color: var(--gray-3);
   border-radius: var(--rounded-sm);
   padding: 0.25rem 0.5rem;
 }
 
 .delete-note-dialog__action:hover {
-  background-color: var(--gray-300);
+  background-color: var(--gray-4);
 }
 
 .delete-note-dialog__delete-action {
-  background-color: var(--color-primary);
+  background-color: var(--pink-2);
   color: white;
 }
 
 .delete-note-dialog__delete-action:hover {
-  background-color: var(--color-primary-dark);
+  background-color: var(--pink-3);
 }

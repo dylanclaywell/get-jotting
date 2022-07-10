@@ -3,7 +3,7 @@
   grid-template-columns: repeat(12, 1fr);
   /* Subtract 2px to account for the top and bottom border */
   height: calc(100vh);
-  padding-top: 47px;
+  padding-top: 46px;
   overflow: hidden;
   background-color: white;
   border-radius: var(--rounded-md);

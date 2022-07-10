@@ -16,11 +16,11 @@
   margin-bottom: 0.25rem;
   z-index: 1;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--gray-300);
+  border-bottom: 1px solid var(--gray-3);
 }
 
 .note-panel--controls {
-  border-bottom: 1px solid var(--gray-300);
+  border-bottom: 1px solid var(--gray-3);
   padding: 0.625rem;
   display: flex;
   justify-content: space-between;
@@ -54,7 +54,7 @@
 }
 
 .note-panel--controls__button:hover {
-  background-color: var(--pink-50);
+  background-color: var(--pink-1);
 }
 
 .note-panel--controls__button {
@@ -69,13 +69,13 @@
 }
 
 .note-panel--controls__button--active {
-  background-color: var(--pink-100);
+  background-color: var(--pink-2);
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: white;
 }
 
 .note-panel--controls__button--active:hover {
-  background-color: var(--pink-200);
+  background-color: var(--pink-3);
 }
 
 .note-panel__text-input {
@@ -98,8 +98,8 @@
 
 .note-panel__rendered-text blockquote {
   margin: 1rem 0rem;
-  border-left: 0.25rem solid var(--gray-300);
-  background-color: var(--gray-200);
+  border-left: 0.25rem solid var(--gray-3);
+  background-color: var(--gray-3);
   border-radius: 4px;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
@@ -109,7 +109,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   padding: 1rem;
-  background-color: var(--gray-200);
+  background-color: var(--gray-3);
   border-radius: 4px;
 }
 

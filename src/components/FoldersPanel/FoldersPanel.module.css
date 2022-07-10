@@ -1,5 +1,5 @@
 .folder-panel {
-  background-color: var(--gray-100);
+  background-color: var(--gray-2);
   grid-column-end: span 3;
   border-right: 1px solid var(--border-gray);
   height: 100%;
@@ -38,36 +38,36 @@
 }
 
 .folder-panel__folder:hover {
-  background-color: var(--gray-200);
+  background-color: var(--gray-3);
 }
 
 .folder-panel__folder--selected {
-  background: var(--gray-300);
+  background: var(--gray-3);
   font-weight: 500;
 }
 
+.folder-panel__folder--selected:hover {
+  background: var(--gray-5);
+}
+
 .folder-panel__folder--focused {
-  background: var(--gray-400);
+  background: var(--gray-4);
 }
 
 .folder-panel__folder__label {
   color: black;
 }
 
-.folder-panel__folder__icon {
-  color: var(--gray-600);
-}
-
 .folder-panel__add-folder-button {
   border: none;
   margin: 0.5rem;
-  color: var(--gray-600);
+  color: var(--gray-5);
   width: fit-content;
   background-color: transparent;
 }
 
 .folder-panel__add-folder-button:hover {
-  color: var(--pink-100);
+  color: var(--pink-2);
 }
 
 .folder-panel__add-folder-button__icon {

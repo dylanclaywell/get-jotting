@@ -9,7 +9,7 @@
 }
 
 .notes-panel__add-note-button {
-  color: var(--gray-600);
+  color: var(--gray-5);
   padding: 0.25rem;
   background-color: transparent;
   border: none;
@@ -17,7 +17,7 @@
 }
 
 .notes-panel__add-note-button:hover {
-  color: var(--pink-100);
+  color: var(--pink-2);
 }
 
 .notes-panel__notes {
@@ -38,16 +38,16 @@
 }
 
 .notes-panel__note:hover {
-  background-color: var(--pink-50);
+  background-color: var(--pink-1);
 }
 
 .notes-panel__note--selected {
-  background: var(--pink-100);
+  background: var(--pink-2);
   font-weight: 500;
 }
 
 .notes-panel__note--selected:hover {
-  background: var(--pink-200);
+  background: var(--pink-3);
 }
 
 .notes-panel__note__label {
@@ -56,8 +56,4 @@
 
 .notes-panel__note--selected > .notes-panel__note__label {
   color: white;
-}
-
-.notes-panel__note__icon {
-  color: var(--gray-600);
 }
