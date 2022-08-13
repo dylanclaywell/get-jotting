@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.0-rc.13",
+    "@tauri-apps/cli": "^1.0.5",
     "@types/marked": "^4.0.3",
     "@types/sanitize-html": "^2.6.2",
     "@types/uuid": "^8.3.4",
@@ -25,7 +25,7 @@
     "vite-plugin-solid": "^2.2.6"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.0.0-rc.6",
+    "@tauri-apps/api": "^1.0.2",
     "debounce": "^1.2.1",
     "marked": "^4.0.17",
     "sanitize-html": "^2.7.0",
