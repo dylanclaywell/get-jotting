@@ -86,8 +86,7 @@
         "resizable": true,
         "title": "get N O T I N G",
         "width": 800,
-        "decorations": false,
-        "transparent": true
+        "decorations": false
       }
     ]
   }

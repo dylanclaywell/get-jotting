@@ -6,6 +6,19 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-y: auto;
+  padding-bottom: 2.625rem;
+}
+
+.folder-panel__add-folder-button-wrapper {
+  position: absolute;
+}
+
+.folder-panel__add-folder-button-container {
+  position: fixed;
+  bottom: 0;
+  width: 11.4rem; /* HACK */
+  background-color: var(--gray-2);
 }
 
 .folder-panel__header {

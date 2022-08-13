@@ -6,6 +6,20 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  overflow-y: auto;
+  position: relative;
+  padding-bottom: 2.75rem;
+}
+
+.note-panel__add-note-button-wrapper {
+  position: absolute;
+}
+
+.notes-panel__add-note-button-container {
+  position: fixed;
+  bottom: 0;
+  width: 11.4rem; /* HACK */
+  background-color: white;
 }
 
 .notes-panel__add-note-button {

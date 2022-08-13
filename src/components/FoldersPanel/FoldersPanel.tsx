@@ -52,15 +52,19 @@ export default function FolderPanel(props: Props) {
           </Show>
         </div>
       </div>
-      <button
-        class={styles['folder-panel__add-folder-button']}
-        onClick={() => setIsAddingNewFolder(true)}
-      >
-        <Icon
-          className={styles['folder-panel__add-folder-button__icon']}
-          name="folder-plus"
-        />
-      </button>
+      <div class={styles['folder-panel__add-folder-button-wrapper']}>
+        <div class={styles['folder-panel__add-folder-button-container']}>
+          <button
+            class={styles['folder-panel__add-folder-button']}
+            onClick={() => setIsAddingNewFolder(true)}
+          >
+            <Icon
+              className={styles['folder-panel__add-folder-button__icon']}
+              name="folder-plus"
+            />
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
