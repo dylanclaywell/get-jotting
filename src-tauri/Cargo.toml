@@ -1,6 +1,6 @@
 [package]
 name = "get-jotting"
-version = "0.1.0"
+version = "0.2.0"
 description = "A simple note-taking app"
 authors = ["Dylan Claywell"]
 license = "MIT"
