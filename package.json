@@ -1,6 +1,6 @@
 {
-  "name": "get-noting",
-  "version": "0.1.0",
+  "name": "get-jotting",
+  "version": "0.2.0",
   "description": "",
   "scripts": {
     "start": "vite",
@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.5",
+    "@tauri-apps/cli": "^1.2.3",
     "@types/marked": "^4.0.3",
     "@types/sanitize-html": "^2.6.2",
     "@types/uuid": "^8.3.4",
@@ -25,7 +25,7 @@
     "vite-plugin-solid": "^2.2.6"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.0.2",
+    "@tauri-apps/api": "^1.2.0",
     "debounce": "^1.2.1",
     "marked": "^4.0.17",
     "sanitize-html": "^2.7.0",

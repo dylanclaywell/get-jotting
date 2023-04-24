@@ -8,7 +8,7 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "get-noting",
+    "productName": "get-jotting",
     "version": "0.1.0"
   },
   "tauri": {
@@ -55,7 +55,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "dev.get-noting",
+      "identifier": "dev.get-jotting",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -84,7 +84,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "get N O T I N G",
+        "title": "get J O T T I N G",
         "width": 800,
         "decorations": false
       }

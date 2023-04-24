@@ -12,12 +12,12 @@ pub mod models;
 
 fn main() {
   tauri::Builder::default()
-    .setup(|app| {
-      let main_window = app.get_window("main").unwrap();
-      set_shadow(&main_window, true).expect("Unsupported platform!");
+  .setup(|app| {
+    let window = app.get_window("main").unwrap();
+    set_shadow(&window, true).unwrap();
 
-      Ok(())
-    })
+    Ok(())
+})
     .invoke_handler(tauri::generate_handler![
       controllers::folders::create_folder,
       controllers::folders::delete_folder,

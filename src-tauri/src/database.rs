@@ -1,19 +1,55 @@
-use sqlite::State;
+use sqlite::{Connection, Error};
 
-pub fn table_exists(table_name: String) -> bool {
-  let connection = sqlite::open("./database.db").unwrap();
-  let mut statement = connection
-    .prepare(
-      "
-        select count(*) as count from sqlite_master
-        where type = 'table' and name = ?
-      ",
-    )
-    .unwrap();
-  statement.bind(1, &*table_name).unwrap();
-  let mut count = String::from("0");
-  while let State::Row = statement.next().unwrap() {
-    count = statement.read::<String>(0).unwrap_or(String::from("0"));
-  }
-  return count != "0";
+fn create_folders_table(connection: &Connection) -> bool {
+    let statement = String::from(
+        "
+      CREATE TABLE if not exists folders (
+        id TEXT,
+        name TEXT,
+        PRIMARY KEY(id)
+      )
+    ",
+    );
+
+    connection.execute(statement).unwrap();
+
+    return true;
+}
+
+fn create_notes_table(connection: &Connection) -> bool {
+    let statement = String::from(
+        "
+  CREATE TABLE if not exists notes (
+   id TEXT NOT NULL,
+   folderId TEXT NOT NULL,
+   text BLOB,
+   name TEXT NOT NULL,
+   PRIMARY KEY(id),
+   FOREIGN KEY(folderId) REFERENCES folders(id)
+  )
+",
+    );
+
+    connection.execute(statement).unwrap();
+
+    return true;
+}
+
+pub fn create_tables(connection: &Connection) -> bool {
+    return create_folders_table(&connection) && create_notes_table(&connection);
+}
+
+pub fn initialize_database(app_handle: &tauri::AppHandle) -> Result<Connection, Error> {
+    let path = app_handle.path_resolver().app_data_dir().unwrap();
+    let path_string = path.display();
+
+    if !path.exists() {
+        std::fs::create_dir_all(&path).unwrap();
+    }
+
+    let connection = sqlite::open(format!("{}{}", path_string, String::from("/database.db")))?;
+
+    create_tables(&connection);
+
+    return Ok(connection);
 }

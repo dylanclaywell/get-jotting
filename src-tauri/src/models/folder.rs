@@ -1,38 +1,20 @@
 use crate::database;
 use serde::{Deserialize, Serialize};
-use sqlite::State;
+use sqlite::{Error, State};
+use tauri::AppHandle;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Folder {
-  pub id: String,
-  pub name: String,
+    pub id: String,
+    pub name: String,
 }
 
-fn create_folders_table() {
-  let connection = sqlite::open("./database.db").unwrap();
+pub fn create(app_handle: &AppHandle, folder: Folder) -> Result<Folder, Error> {
+    let connection = database::initialize_database(app_handle)?;
 
-  let statement = String::from(
-    "
-      CREATE TABLE folders (
-        id TEXT,
-        name TEXT,
-        PRIMARY KEY(id)
-      )
-    ",
-  );
-
-  connection.execute(statement).unwrap();
-}
-
-pub fn create(folder: Folder) -> Folder {
-  if !database::table_exists(String::from("folders")) {
-    create_folders_table();
-  }
-
-  let connection = sqlite::open("./database.db").unwrap();
-  let mut statement = connection
-    .prepare(
-      "
+    let mut statement = connection
+        .prepare(
+            "
         insert into folders (
           id,
           name
@@ -41,81 +23,75 @@ pub fn create(folder: Folder) -> Folder {
           ?
         )
       ",
-    )
-    .unwrap();
+        )
+        .unwrap();
 
-  statement.bind(1, &*folder.id).unwrap();
-  statement.bind(2, &*folder.name).unwrap();
+    statement.bind(1, &*folder.id).unwrap();
+    statement.bind(2, &*folder.name).unwrap();
 
-  statement.next().unwrap();
+    statement.next().unwrap();
 
-  println!("Creating folder");
-  println!("  - id: {}", folder.id);
-  println!("  - name: {}", folder.name);
+    println!("Creating folder");
+    println!("  - id: {}", folder.id);
+    println!("  - name: {}", folder.name);
 
-  return folder;
+    Ok(folder)
 }
 
-pub fn delete(id: String) {
-  if !database::table_exists(String::from("folders")) {
-    create_folders_table();
-  }
+pub fn delete(app_handle: &AppHandle, id: String) -> Result<(), Error> {
+    let connection = database::initialize_database(app_handle)?;
 
-  let connection = sqlite::open("./database.db").unwrap();
-
-  let mut delete_folder_notes_statement = connection
-    .prepare(
-      "
+    let mut delete_folder_notes_statement = connection
+        .prepare(
+            "
       delete from notes where folderId = ?
     ",
-    )
-    .unwrap();
+        )
+        .unwrap();
 
-  delete_folder_notes_statement.bind(1, &*id).unwrap();
+    delete_folder_notes_statement.bind(1, &*id).unwrap();
 
-  delete_folder_notes_statement.next().unwrap();
+    delete_folder_notes_statement.next().unwrap();
 
-  let mut delete_folder_statement = connection
-    .prepare(
-      "
+    let mut delete_folder_statement = connection
+        .prepare(
+            "
         delete from folders where id = ?
       ",
-    )
-    .unwrap();
+        )
+        .unwrap();
 
-  delete_folder_statement.bind(1, &*id).unwrap();
+    delete_folder_statement.bind(1, &*id).unwrap();
 
-  delete_folder_statement.next().unwrap();
+    delete_folder_statement.next().unwrap();
 
-  println!("Deleting folder");
-  println!("  - id: {}", id);
+    println!("Deleting folder");
+    println!("  - id: {}", id);
+
+    Ok(())
 }
 
-pub fn get_all() -> Vec<Folder> {
-  let connection = sqlite::open("./database.db").unwrap();
+pub fn get_all(app_handle: &AppHandle) -> Result<Vec<Folder>, Error> {
+    let connection = database::initialize_database(app_handle)?;
 
-  if !database::table_exists(String::from("folders")) {
-    create_folders_table();
-  }
+    let mut folders = Vec::new();
 
-  let mut folders = Vec::new();
-
-  let mut statement = connection
-    .prepare(
-      "
+    let mut statement = connection
+        .prepare(
+            "
         select id, name from folders
       ",
-    )
-    .unwrap();
+        )
+        .unwrap();
 
-  while let State::Row = statement.next().unwrap() {
-    let folder = Folder {
-      id: statement.read::<String>(0).unwrap(),
-      name: statement.read::<String>(1).unwrap(),
-    };
+    while let State::Row = statement.next().unwrap() {
+        let folder = Folder {
+            id: statement.read::<String>(0).unwrap(),
+            name: statement.read::<String>(1).unwrap(),
+        };
 
-    folders.push(folder)
-  }
+        folders.push(folder)
+    }
 
-  return folders;
+    Ok(folders)
 }
