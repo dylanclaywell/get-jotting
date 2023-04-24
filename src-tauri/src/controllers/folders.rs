@@ -10,7 +10,9 @@ pub fn create_folder(app_handle: AppHandle, name: String) {
         name,
     };
 
-    folder::create(&app_handle, folder);
+    if folder::create(&app_handle, folder).is_err() {
+        println!("Error creating folder");
+    }
 }
 
 #[tauri::command]
